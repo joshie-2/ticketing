@@ -1,0 +1,28 @@
+apiVersion: skaffold/v2beta25         # version of the configuration
+kind: Config                          # always Config
+deploy:                               # describes how images are deployed.
+  kubectl:                            # uses a client side kubectl apply to deploy manifests. You'll need a kubectl CLI version installed that's compatible with your cluster.
+    manifests:                        # the Kubernetes yaml or manifests
+      - ./infra/k8s/*
+build:                                # describes how images are built.
+  # local:                              # describes how to do a build on the local docker daemon and optionally push to a repository.
+  #  push: false                       # should images be pushed to a registry. If not specified, images are pushed only if the current Kubernetes context connects to a remote cluster.
+  googleCloudBuild: 
+    projectId: ticketing-development-333521
+  artifacts: 	                        # the images you're going to be building.
+    - image: us.gcr.io/ticketing-development-333521/auth # name of the image to be built.
+      context: auth                   # directory containing the artifact's sources.
+      docker:                         # describes an artifact built from a Dockerfile.
+        dockerfile: Dockerfile        # locates the Dockerfile relative to workspace.
+      sync:                           # local files synced to pods instead of triggering an image build when modified. If no files are listed, sync all the files and infer the destination.
+        manual:                       # manual sync rules indicating the source and destination.
+          - src: 'src/**/*.ts'        # a glob pattern to match local paths against. Directories should be delimited by / on all platforms.
+            dest: .                   # destination path in the container where the files should be synced to.
+    - image: us.gcr.io/ticketing-development-333521/client # name of the image to be built.
+      context: client                   # directory containing the artifact's sources.
+      docker:                         # describes an artifact built from a Dockerfile.
+        dockerfile: Dockerfile        # locates the Dockerfile relative to workspace.
+      sync:                           # local files synced to pods instead of triggering an image build when modified. If no files are listed, sync all the files and infer the destination.
+        manual:                       # manual sync rules indicating the source and destination.
+          - src: '**/*.s'             # a glob pattern to match local paths against. Directories should be delimited by / on all platforms.
+            dest: .                   # destination path in the container where the files should be synced to. 
