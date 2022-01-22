@@ -13,6 +13,7 @@ This project is a tutorial from one of my absolute favorite instructors [Stephen
 client
 
 - NextJs
+- JavaScript
 
 backend
 
@@ -34,3 +35,19 @@ Dev tooling
 # Architecture
 
 ![](/docs/images/Architecture.jpeg)
+
+# Services
+
+![](/docs/images/Services.jpeg)
+
+# Resources
+
+![](/docs/images/Resources.jpeg)
+
+# API
+
+![](/docs/images/API.jpeg)
+
+# Events
+
+![](/docs/images/Events.jpeg)
