@@ -6,26 +6,27 @@ const Home = ({ currentUser }) => {
 };
 
 Home.getInitialProps = async ({ req }) => {
-	console.log(req);
 	// defines if being called on the server or within the client.
 	if (typeof window === 'undefined') {
 		// server
-		const { data } = await axios.get(
-			// SERVICE-NAME.NAMESPACE.svc.cluster.local/PATH
-			'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
-			{
-				headers: req.headers,
-			},
-		);
-		return data;
+		try {
+			const { data } = await axios.get(
+				// SERVICE-NAME.NAMESPACE.svc.cluster.local/PATH
+				'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
+				{
+					headers: req.headers,
+				},
+			);
+			return data;
+		} catch (error) {
+			console.log(error.message);
+		}
 	} else {
 		// browser
 		try {
 			const { data } = await axios.get('/api/users/currentuser');
 			return data;
-		} catch (error) {
-			console.log(error.message);
-		}
+		} catch (error) {}
 	}
 };
 

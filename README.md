@@ -33,4 +33,4 @@ Dev tooling
 
 # Architecture
 
-![](https://drive.google.com/file/d/10ENq9CYrFb2xZBKOooTlbuXJngAWH62B/view?usp=sharing)
+![](/docs/images/Architecture.jpeg)
